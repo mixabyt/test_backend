@@ -23,7 +23,7 @@ class StoreArticleRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'image' => ['nullable', 'string'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'tags' => ['nullable', 'array'],
             'tags.*' => ['string', 'alpha_num', 'lowercase', 'min:3', 'max:255'],
             'content' => ['required', 'string'],

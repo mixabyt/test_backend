@@ -9,13 +9,14 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\EditArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
-
+use App\Http\Controllers\Admin\UpdateArticleController;
 
 Route::middleware('auth')->prefix('myarticles')->group(function () {
         Route::get('/', ShowArticleController::class)->name('dashboard');
         Route::view('/create', 'admin.article.create')->name('article.create');
         Route::post("/create", StoreArticleController::class)->name('article.store');
         Route::get('/update/{id}', EditArticleController::class)->name('article.edit');
+        Route::put('/update/{id}', UpdateArticleController::class)->name('article.update');
         Route::delete('/delete/{id}', DeleteArticleController::class)->name('article.destroy');
 });
 

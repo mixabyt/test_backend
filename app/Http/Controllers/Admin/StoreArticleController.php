@@ -14,12 +14,16 @@ class StoreArticleController extends Controller
      */
     public function __invoke(StoreArticleRequest $request)
     {
-        $articleData = $request->validated();
-        $data['is_active'] = $request->boolean('is_active');
-        $data['tags'] = $data['tags'] ?? [];
+        $data = $request->validated();
 
-        $user = auth()->user();
-        $user->articles()->create($articleData);
+        $data['is_active'] = $request->boolean('is_active');
+        $data['tags'] = $request->input('tags', []);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('articles', 'public');
+        }
+
+        $request->user()->articles()->create($data);
 
         return redirect()->route('dashboard');
     }

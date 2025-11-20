@@ -1,5 +1,5 @@
 <x-layouts.adminpanel :title="'Створити статтю'">
-<form method="POST" action="{{route('article.store')}}">
+<form method="POST" action="{{route('article.store')}}" enctype="multipart/form-data">
     @csrf
     <div class="container py-5">
         <div class="mb-3">
@@ -65,6 +65,13 @@
         <div class="mb-3">
             <label for="content" class="form-label">Текст статті</label>
             <textarea class="form-control" id="content" name="content" rows="10" placeholder="Введіть текст статті" required></textarea>
+        </div>
+        <div class="form-check m-3">
+            <input type="hidden" name="is_active" value="0">
+            <input class="form-check-input" type="checkbox" name="is_active" value="1" id="flexCheckDefault" checked>
+            <label class="form-check-label" for="flexCheckDefault">
+                Зробити активною
+            </label>
         </div>
 
 

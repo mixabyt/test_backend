@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class EditArticleController extends Controller
@@ -10,8 +11,10 @@ class EditArticleController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, int $id)
     {
-        return view('admin.article.edit');
+        $article = Article::find($id);
+
+        return view('admin.article.edit', compact('article'));
     }
 }
