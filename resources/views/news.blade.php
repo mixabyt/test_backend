@@ -1,5 +1,5 @@
 
-<x-layouts.adminpanel>
+<x-layouts.adminpanel :title="'Новини'">
     <div class="container my-4">
         <div class="row g-4">
 
@@ -10,8 +10,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Назва статті</h5>
                         <p class="text-muted mb-2">01.01.2025</p>
-                        <p class="card-text">Короткий опис або вступний текст...</p>
-                        <a href="#" class="btn btn-primary">Читати далі</a>
+                        <button type="button" class="btn btn-primary">Читати</button>
                     </div>
                 </div>
             </div>
@@ -23,8 +22,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Назва статті</h5>
                         <p class="text-muted mb-2">01.01.2025</p>
-                        <p class="card-text">Короткий опис або вступний текст...</p>
-                        <a href="#" class="btn btn-primary">Читати далі</a>
+                        <button type="button" class="btn btn-primary">Читати</button>
                     </div>
                 </div>
             </div>
@@ -36,14 +34,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Назва статті</h5>
                         <p class="text-muted mb-2">01.01.2025</p>
-                        <p class="card-text">Короткий опис або вступний текст...</p>
-                        <a href="#" class="btn btn-primary">Читати далі</a>
+                        <button type="button" class="btn btn-primary">Читати</button>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
-
-
 </x-layouts.adminpanel>
+
