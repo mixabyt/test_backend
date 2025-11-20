@@ -3,7 +3,7 @@
     <div class="container my-4">
         <div class="row g-4">
 
-            <!-- Article card -->
+
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card h-100">
                     <img src="https://img.1kr.ua/history/647e170e/4f5344cd/1_512x918_127383_eb5dc6262057a4e4902b1823355aaf515050272813a3d96fa8cae2edf205fb3b1670515170.jpg" class="card-img-top" alt="Фото">
