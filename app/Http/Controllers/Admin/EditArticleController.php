@@ -13,8 +13,7 @@ class EditArticleController extends Controller
      */
     public function __invoke(Request $request, int $id)
     {
-        $article = Article::find($id);
-
+        $article = Article::with('tags')->findOrFail($id);
         return view('admin.article.edit', compact('article'));
     }
 }

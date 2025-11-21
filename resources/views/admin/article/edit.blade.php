@@ -9,13 +9,23 @@
         </div>
 
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="mb-3">
             <label for="tagsInput" class="form-label">Теги</label>
             <div id="tagsContainer" class="mb-2 d-flex flex-wrap gap-2">
 
             </div>
             <input type="text" class="form-control" id="tagsInput" placeholder="Введіть теги через пробіл">
-            <input type="hidden" name="tags" id="tagsHidden">
+            <input type="hidden" name="tags[]" id="tagsHidden">
         </div>
 
 
@@ -52,9 +62,6 @@
         </div>
 
 
-        <button type="submit" class="btn btn-success">Редагувати</button>
-        <a href="{{route('dashboard')}}" class="btn btn-secondary">Скасувати</a>
-
         <div class="form-check m-3">
             <input type="hidden" name="is_active" value="0">
             <input class="form-check-input" type="checkbox" name="is_active" value="1" id="flexCheckDefault"
@@ -63,6 +70,11 @@
                 Зробити активною
             </label>
         </div>
+
+        <button type="submit" class="btn btn-success">Редагувати</button>
+        <a href="{{route('dashboard')}}" class="btn btn-secondary">Скасувати</a>
+
+
     </div>
 
 
@@ -71,41 +83,60 @@
 
 
     <script>
-        const input = document.getElementById('tagsInput');
-        const container = document.getElementById('tagsContainer');
-        // const hiddenInput = document.getElementById('tagsHidden');
-        let tags = [];
+        const container = document.getElementById('tagsContainer')
+        const input = document.getElementById('tagsInput')
+        const form = document.querySelector('form');
 
-        // function updateHiddenInput() {
-        //     hiddenInput.value = tags.join(',');
-        // }
+        let tags = @json(old('tags', $article->tags->pluck('name')))
 
-        function createTagElement(tag) {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'btn btn-sm btn-secondary';
-            btn.textContent = tag + ' ×';
-            btn.addEventListener('click', () => {
-                tags = tags.filter(t => t !== tag);
-                container.removeChild(btn);
+            function createTagElement(tag) {
+                const btn = document.createElement('button')
+                btn.type = 'button'
+                btn.className = 'btn btn-sm btn-secondary'
+                btn.textContent = tag + ' ×'
+                btn.addEventListener('click', () => {
+                    tags = tags.filter(t => t !== tag)
+                    btn.remove()
+                    const hiddenInputs = document.querySelectorAll('input[name="tags[]"]')
+                    hiddenInputs.forEach(input => {
+                        if (input.value === tag) input.remove()
+                    })
+                })
+                return btn
+            }
+
+        function updateHiddenInputs() {
+
+            document.querySelectorAll('input[name="tags[]"]').forEach(i => i.remove());
+
+            tags.forEach(tag => {
+                const inputEl = document.createElement('input');
+                inputEl.type = 'hidden';
+                inputEl.name = 'tags[]';
+                inputEl.value = tag;
+                container.appendChild(inputEl);
             });
-            console.log(tags)
-            return btn;
         }
 
-        input.addEventListener('keydown', (e) => {
+        tags.forEach(tag => {
+            const tagEl = createTagElement(tag)
+            container.appendChild(tagEl)
+        })
+        updateHiddenInputs()
+
+        input.addEventListener('keydown', e => {
             if (e.key === ' ') {
-                e.preventDefault();
-                const tag = input.value.trim();
+                e.preventDefault()
+                const tag = input.value.trim()
                 if (tag && !tags.includes(tag)) {
-                    tags.push(tag);
-                    const tagEl = createTagElement(tag);
-                    container.appendChild(tagEl);
-                    // updateHiddenInput();
+                    tags.push(tag)
+                    const tagEl = createTagElement(tag)
+                    container.appendChild(tagEl)
+                    updateHiddenInputs()
                 }
-                input.value = '';
+                input.value = ''
             }
-        });
+        })
     </script>
     <script>
         const imageInput = document.getElementById('image');

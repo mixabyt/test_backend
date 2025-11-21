@@ -19,7 +19,7 @@
                                 <form method="POST" action="{{route('article.destroy', $article->id)}}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Видалити</button>
+                                    <button onclick="confirmation(event)" type="submit" class="btn btn-danger">Видалити</button>
                                 </form>
                             </div>
                         </div>
@@ -30,6 +30,27 @@
 
         </div>
     </div>
+
+    <script type="text/javascript">
+        function confirmation(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Видалити?',
+                text: "Ви точно хочете видалити цю статтю? Ця дія незворотня",
+                // icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Так',
+                cancelButtonText: 'нє'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    event.target.closest('form').submit();
+                }
+            });
+        }
+    </script>
 
 
 </x-layouts.adminpanel>

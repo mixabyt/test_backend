@@ -54,5 +54,6 @@
 <footer class="bg-dark text-white text-center py-2">
     &copy; 2025
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
