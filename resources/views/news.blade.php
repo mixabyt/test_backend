@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$article->title}}</h5>
                         <p class="text-muted mb-2">{{$article->created_at}}</p>
-                        <button type="button" class="btn btn-primary">Читати</button>
+                        <a type="button" class="btn btn-primary" href="{{route('new.page',$article->id)}}">Читати</a>
                     </div>
                 </div>
             </div>

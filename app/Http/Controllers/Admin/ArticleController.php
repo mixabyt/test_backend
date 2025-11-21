@@ -59,9 +59,10 @@ class ArticleController extends Controller
     {
 
         $data = $request->validated();
-        $article = Article::with('tags')->firstOrFail();
+        $article = Article::with('tags')->findOrFail($id);
         $tagsInput = $request->input('tags', []);
         $existingTags = $article->tags->pluck('name')->toArray();
+
         $differenceTags = array_diff($tagsInput, $existingTags);
 
 
@@ -70,9 +71,12 @@ class ArticleController extends Controller
         }
 
         $toDelete = array_diff($existingTags, $tagsInput);
+        print_r($toDelete);
+
         if (!empty($toDelete)) {
             Tag::whereIn('name', $toDelete)->delete();
         }
+
         foreach ($differenceTags as $tagName) {
             $article->tags()->create(['name' => $tagName]);
         }

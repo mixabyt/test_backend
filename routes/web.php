@@ -32,4 +32,4 @@ Route::post('/register', RegisterController::class)->middleware('guest')->name('
 
 Route::view('/', 'news')->name('news');
 Route::get('/', [NewsController::class, 'index'])->name('news');
-
+Route::get('/{id}', [NewsController::class, 'indexpage'])->name('new.page');
