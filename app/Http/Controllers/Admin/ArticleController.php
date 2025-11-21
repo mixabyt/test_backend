@@ -71,7 +71,6 @@ class ArticleController extends Controller
         }
 
         $toDelete = array_diff($existingTags, $tagsInput);
-        print_r($toDelete);
 
         if (!empty($toDelete)) {
             Tag::whereIn('name', $toDelete)->delete();

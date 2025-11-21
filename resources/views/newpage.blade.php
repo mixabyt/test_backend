@@ -1,14 +1,44 @@
 <x-layouts.adminpanel :title="$article->title">
-    <div class="container my-4">
-        <h1 class="text-center mt-3">{{$article->title}}</h1>
 
 
-        <div class="text-center m-4">
-            <img src="{{asset('storage/' . $article->image)}}" class="img-fluid" alt="...">
-        </div>
 
-        <div class="text-center m-4">
-            {{$article->content}}
+
+
+    <div class="container py-4">
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{route('news')}}">Домашня сторінка</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{$article->title}}</li>
+            </ol>
+        </nav>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <h1 class="mb-3">{{ $article->title }}</h1>
+
+                <p class="text-muted" >
+                    {{ $article->created_at }}
+                </p>
+
+
+                @if($article->image)
+                    <img src="{{ asset('storage/' . $article->image) }}"
+                         alt="{{ $article->title }}"
+                         class="img-fluid rounded mb-4">
+                @else
+{{--                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded mb-4"--}}
+{{--                         style="height: 300px;">--}}
+{{--                        <span>Фото відсутнє</span>--}}
+{{--                    </div>--}}
+                @endif
+
+
+                <div class="article-content fs-5 text-justify-md">
+                    {{$article->content}}
+                </div>
+
+            </div>
         </div>
 
     </div>
