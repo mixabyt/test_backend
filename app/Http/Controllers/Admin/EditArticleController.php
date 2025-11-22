@@ -14,6 +14,7 @@ class EditArticleController extends Controller
     public function __invoke(Request $request, int $id)
     {
         $article = Article::with('tags')->findOrFail($id);
+        $this->authorize('update', $article);
         return view('admin.article.edit', compact('article'));
     }
 }

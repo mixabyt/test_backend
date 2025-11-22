@@ -55,11 +55,20 @@ class ArticleController extends Controller
     }
 
 
+    public function edit(Request $request, int $id)
+    {
+        $article = Article::with('tags')->findOrFail($id);
+        $this->authorize('update', $article);
+        return view('admin.article.edit', compact('article'));
+    }
+
+
     public function update(StoreArticleRequest $request, int $id) : RedirectResponse
     {
 
         $data = $request->validated();
         $article = Article::with('tags')->findOrFail($id);
+        $this->authorize('update', $article);
         $tagsInput = $request->input('tags', []);
         $existingTagsName = $article->tags->pluck('name')->toArray();
 
@@ -110,7 +119,9 @@ class ArticleController extends Controller
 
     public function destroy($id)
     {
-        Article::destroy($id);
+        $article = Article::findOrFail($id);
+        $this->authorize('delete', $article);
+        $article->delete();
         return redirect()->route('dashboard');
     }
 }
