@@ -121,6 +121,9 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($id);
         $this->authorize('delete', $article);
+        if ($article->image && Storage::disk('public')->exists($article->image)) {
+            Storage::disk('public')->delete($article->image);
+        }
         $article->delete();
         return redirect()->route('dashboard');
     }
