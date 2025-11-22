@@ -18,11 +18,12 @@
                 </div>
             </div>
             @endforeach
-
-
-
-
         </div>
+
     </div>
+    <div class="d-flex justify-content-center my-4">
+        {{ $articles->links('pagination::bootstrap-5') }}
+    </div>
+
 </x-layouts.adminpanel>
 

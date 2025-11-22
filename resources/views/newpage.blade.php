@@ -1,9 +1,4 @@
 <x-layouts.adminpanel :title="$article->title">
-
-
-
-
-
     <div class="container py-4">
         <nav aria-label="breadcrumb ">
             <ol class="breadcrumb">
@@ -26,7 +21,7 @@
                     <img src="{{ asset('storage/' . $article->image) }}"
                          alt="{{ $article->title }}"
                          class="img-fluid rounded mb-4">
-                @else
+{{--                @else--}}
 {{--                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded mb-4"--}}
 {{--                         style="height: 300px;">--}}
 {{--                        <span>Фото відсутнє</span>--}}
@@ -41,12 +36,22 @@
             </div>
         </div>
         <div class="d-flex justify-content-between mt-4">
-            <a href="#" class="btn btn-outline-primary">
-                ← Попередня новина
-            </a>
-            <a href="#" class="btn btn-outline-primary">
+
+            @if($prev)
+                <a href="{{route('new.page', $prev->id)}}" class="btn btn-outline-primary">
+                    ← Попередня новина
+                </a>
+            @else
+                <div></div>
+            @endif
+            @if($next)
+            <a href="{{route('new.page', $next->id)}}" class="btn btn-outline-primary">
                  Попередня новина →
             </a>
+            @else
+                <div></div>
+            @endif
+
 
         </div>
 

@@ -21,7 +21,6 @@ Route::middleware('auth')->prefix('myarticles')->group(function () {
         Route::delete('/delete/{id}', [ArticleController::class, 'destroy'])->name('article.destroy');
 });
 
-// при видаленні поста видаляти фотку на пк
 Route::view('/login', 'Auth.login')->name('login')->middleware('guest');
 Route::post('/login', LoginController::class)->middleware('guest')->name('login.in');
 Route::post('/logout', LogoutController::class)->middleware('auth')->name('logout');
