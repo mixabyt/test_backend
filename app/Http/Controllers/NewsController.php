@@ -9,7 +9,7 @@ class NewsController extends Controller
 {
 
     public function index() {
-        $articles = Article::where('is_active', true)->get();
+        $articles = Article::where('is_active', true)->orderBy('created_at', 'desc')->get();
         return view('news', compact('articles'));
     }
 

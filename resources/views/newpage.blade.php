@@ -40,8 +40,19 @@
 
             </div>
         </div>
+        <div class="d-flex justify-content-between mt-4">
+            <a href="#" class="btn btn-outline-primary">
+                ← Попередня новина
+            </a>
+            <a href="#" class="btn btn-outline-primary">
+                 Попередня новина →
+            </a>
+
+        </div>
 
     </div>
+
+
 
 
 </x-layouts.adminpanel>

@@ -20,15 +20,20 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
 
+
             <ul class="navbar-nav me-auto">
+                @auth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         Мої новини
                     </a>
                 </li>
+                @endauth
             </ul>
 
-            <ul class="navbar-nav">
+
+
+                <ul class="navbar-nav">
                 @guest
                     <li class="nav-item">
                         <a class="btn btn-outline-primary" href="{{ route('login') }}">
@@ -55,7 +60,6 @@
                 @endauth
 
             </ul>
-
         </div>
     </div>
 </nav>

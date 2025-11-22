@@ -61,16 +61,16 @@ class ArticleController extends Controller
         $data = $request->validated();
         $article = Article::with('tags')->findOrFail($id);
         $tagsInput = $request->input('tags', []);
-        $existingTags = $article->tags->pluck('name')->toArray();
+        $existingTagsName = $article->tags->pluck('name')->toArray();
 
-        $differenceTags = array_diff($tagsInput, $existingTags);
+        $differenceTags = array_diff($tagsInput, $existingTagsName);
 
 
         if ($response = $this->isColissionn($differenceTags)) {
             return $response;
         }
 
-        $toDelete = array_diff($existingTags, $tagsInput);
+        $toDelete = array_diff($existingTagsName, $tagsInput);
 
         if (!empty($toDelete)) {
             Tag::whereIn('name', $toDelete)->delete();
