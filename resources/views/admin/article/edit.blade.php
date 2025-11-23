@@ -79,9 +79,6 @@
 
 
 </form>
-
-
-
     <script>
         const container = document.getElementById('tagsContainer')
         const input = document.getElementById('tagsInput')
