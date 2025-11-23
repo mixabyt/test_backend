@@ -11,7 +11,12 @@ use Illuminate\Support\Str;
 class LinkTagsToArticleJob implements ShouldQueue
 {
     use Queueable;
-
+    /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 5*60;
     /**
      * Create a new job instance.
      */
