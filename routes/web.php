@@ -1,15 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\DeleteArticleController;
 use App\Http\Controllers\Admin\ShowArticleController;
-use App\Http\Controllers\Admin\StoreArticleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Admin\EditArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
-//use App\Http\Controllers\Admin\UpdateArticleController;
 use App\Http\Controllers\Admin\ArticleController;
 
 Route::middleware('auth')->prefix('myarticles')->group(function () {
