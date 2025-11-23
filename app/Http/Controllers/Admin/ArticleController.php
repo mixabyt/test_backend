@@ -51,8 +51,9 @@ class ArticleController extends Controller
         }
         LinkTagsToArticleJob::dispatch($article);
 
+        usleep( 200 * 1000 );
 
-        return redirect()->route('dashboard');
+        return redirect()->route('new.page', $article->id);
     }
 
 
