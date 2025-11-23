@@ -35,6 +35,9 @@ class Article extends Model
     public function getContentWithLinks() : string {
         $content = e($this->content);
         foreach ($this->containedTags as $tag) {
+            if (!$tag->article->is_active) {
+                continue;
+            }
             $content = preg_replace(
                 '/\b('.$tag->name.')\b/ui',
                 '<a href="' . route("new.page", $tag->article_id) . '">$1</a>',

@@ -38,12 +38,6 @@ class CreateTagJob implements ShouldQueue
         Article::query()
             ->where('id', '!=', $this->article->id)
             ->whereRaw('content REGEXP ?', ['\b' . $tag->name . '\b'])
-//            ->where(function ($query) use ($tag) {
-//                $query->where('content', 'like',  $this->tagName . ' %')
-//                    ->orWhere('content', 'like', '% ' . $this->tagName . ' %')
-//                    ->orWhere('content', 'like', '% ' . $this->tagName)
-//                    ->orWhere('content', 'like',  $this->tagName);
-//            })
             ->chunk(100, function ($articles) use ($tag) {
                 foreach ($articles as $article) {
                     $article->containedTags()->attach($tag);

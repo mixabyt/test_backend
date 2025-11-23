@@ -45,15 +45,18 @@ class ArticleController extends Controller
             return $isCollision;
         }
 
+
+
         $article = $request->user()->articles()->create($data);
+        $tags = $article->tags()->createMany($tagsInput);
         foreach ($tagsInput as $tag) {
             CreateTagJob::dispatch($tag, $article);
         }
         LinkTagsToArticleJob::dispatch($article);
 
-        usleep( 200 * 1000 );
 
-        return redirect()->route('new.page', $article->id);
+        usleep( 200 * 1000 );
+        return redirect()->route('article.edit', $article->id);
     }
 
 
