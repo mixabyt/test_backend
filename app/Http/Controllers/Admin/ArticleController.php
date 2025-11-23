@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\article\StoreArticleRequest;
+use App\Jobs\CreateTagJob;
+use App\Jobs\LinkTagsToArticleJob;
 use App\Models\Article;
 use App\Models\Tag;
 use http\Client\Response;
@@ -44,11 +46,10 @@ class ArticleController extends Controller
         }
 
         $article = $request->user()->articles()->create($data);
-        foreach ($tagsInput as $tagName) {
-            $article->tags()->create([
-                'name' => $tagName
-            ]);
+        foreach ($tagsInput as $tag) {
+            CreateTagJob::dispatch($tag, $article);
         }
+        LinkTagsToArticleJob::dispatch($article);
 
 
         return redirect()->route('dashboard');
@@ -85,9 +86,13 @@ class ArticleController extends Controller
             Tag::whereIn('name', $toDelete)->delete();
         }
 
-        foreach ($differenceTags as $tagName) {
-            $article->tags()->create(['name' => $tagName]);
+//        foreach ($differenceTags as $tagName) {
+//            $article->tags()->create(['name' => $tagName]);
+//        }
+        foreach ($differenceTags as $tag) {
+            CreateTagJob::dispatch($tag, $article);
         }
+        LinkTagsToArticleJob::dispatch($article);
 
 
         $data['is_active'] = $request->boolean('is_active');

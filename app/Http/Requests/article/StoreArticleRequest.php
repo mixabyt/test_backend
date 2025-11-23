@@ -32,4 +32,21 @@ class StoreArticleRequest extends FormRequest
             'is_active' => ['nullable', 'boolean'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+
+            'tags.*.lowercase' => 'Усі тегі повинні використовувати лише малі літери',
+            'tags.*.min' => 'Тегі повинні складатися принайні з 3 букв.',
+        ];
+    }
+
+
+    public function attributes(): array
+    {
+        return [
+            'tags.*' => 'тег',
+        ];
+    }
 }

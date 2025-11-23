@@ -41,12 +41,10 @@
                 <a href="{{route('new.page', $prev->id)}}" class="btn btn-outline-primary">
                     ← Попередня новина
                 </a>
-            @else
-                <div></div>
             @endif
             @if($next)
             <a href="{{route('new.page', $next->id)}}" class="btn btn-outline-primary">
-                 Попередня новина →
+                 Наступна новина →
             </a>
             @else
                 <div></div>
