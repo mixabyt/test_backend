@@ -9,7 +9,7 @@ class NewsController extends Controller
 {
 
     public function index() {
-        $articles = Article::where('is_active', true)->orderBy('created_at', 'desc')->paginate(10);
+        $articles = Article::where('is_active', true)->orderBy('created_at', 'desc')->paginate(9);
 
         if (request()->get('page', 1) > $articles->lastPage() && $articles->lastPage() > 0) {
             return abort(404);
