@@ -10,7 +10,7 @@
                          style="background-image: {{ $article->image ? 'url(' . asset('storage/' . $article->image) . ')' : 'none' }}">
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{$article->title}}</h5>
+                        <h5 class="card-title text-nowrap text-truncate">{{$article->title}}</h5>
                         <p class="text-muted mb-2">{{$article->created_at}}</p>
                         <a type="button" class="btn btn-primary" href="{{route('new.page',$article->id)}}">Читати</a>
                     </div>

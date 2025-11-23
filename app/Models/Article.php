@@ -33,7 +33,7 @@ class Article extends Model
     }
 
     public function getContentWithLinks() : string {
-        $content = $this->content;
+        $content = e($this->content);
         foreach ($this->containedTags as $tag) {
             $content = preg_replace(
                 '/\b('.$tag->name.')\b/ui',
