@@ -10,7 +10,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container">
 
-        <a class="navbar-brand fw-bold" href="{{ route('news') }}">
+
+        <a class="navbar-brand
+        {{(Route::currentRouteName() === 'news' or Route::currentRouteName() === 'new.page') ? 'fw-bold' : ''}}
+        " href="{{ route('news') }}">
             Новини
         </a>
 
@@ -23,17 +26,16 @@
 
             <ul class="navbar-nav me-auto">
                 @auth
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard') }}">
-                        Мої новини
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{(Route::currentRouteName() === 'news' or Route::currentRouteName() === 'new.page') ? '' : 'fw-bold'}}" href="{{ route('dashboard') }}">
+                            Мої новини
+                        </a>
+                    </li>
                 @endauth
             </ul>
 
 
-
-                <ul class="navbar-nav">
+            <ul class="navbar-nav">
                 @guest
                     <li class="nav-item">
                         <a class="btn btn-outline-primary" href="{{ route('login') }}">
