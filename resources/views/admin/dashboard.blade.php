@@ -11,7 +11,7 @@
                              style="background-image: {{ $article->image ? 'url(' . asset('storage/' . $article->image) . ')' : 'none' }}">
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{$article->title}}</h5>
+                            <h5 class="card-title text-nowrap text-truncate">{{$article->title}}</h5>
                             <p class="text-muted mb-2">{{$article->created_at}}</p>
                             <div class="d-flex gap-2">
                                 <a href="{{route('article.edit', $article->id)}}" class="btn btn-success">Редагувати</a>
@@ -26,8 +26,9 @@
                     </div>
                 </div>
             @endforeach
-
-
+        </div>
+        <div class="d-flex justify-content-center my-4">
+            {{ $articles->links('pagination::bootstrap-5') }}
         </div>
     </div>
 
@@ -43,7 +44,7 @@
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
                 confirmButtonText: 'Так',
-                cancelButtonText: 'нє'
+                cancelButtonText: 'Ні'
             }).then((result) => {
                 if (result.isConfirmed) {
                     event.target.closest('form').submit();

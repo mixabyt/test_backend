@@ -13,7 +13,7 @@ class ShowArticleController extends Controller
     public function __invoke(Request $request)
     {
         $user = auth()->user();
-        $articles =$user->articles()->get();
+        $articles =$user->articles()->orderBy('created_at', 'desc')->paginate(9);
         return view('admin.dashboard', compact('articles'));
     }
 }
