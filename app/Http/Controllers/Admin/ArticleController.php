@@ -48,7 +48,6 @@ class ArticleController extends Controller
 
 
         $article = $request->user()->articles()->create($data);
-        $tags = $article->tags()->createMany($tagsInput);
         foreach ($tagsInput as $tag) {
             CreateTagJob::dispatch($tag, $article);
         }
@@ -90,9 +89,6 @@ class ArticleController extends Controller
             Tag::whereIn('name', $toDelete)->delete();
         }
 
-//        foreach ($differenceTags as $tagName) {
-//            $article->tags()->create(['name' => $tagName]);
-//        }
         foreach ($differenceTags as $tag) {
             CreateTagJob::dispatch($tag, $article);
         }
