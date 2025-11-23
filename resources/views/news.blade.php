@@ -1,4 +1,3 @@
-
 <x-layouts.adminpanel :title="'Новини'">
     <div class="container my-4">
         <div class="row g-4">

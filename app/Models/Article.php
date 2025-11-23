@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use phpDocumentor\Reflection\PseudoTypes\IntegerRange;
 
 class Article extends Model
 {
@@ -29,5 +30,16 @@ class Article extends Model
 
     public function containedTags() : BelongsToMany {
         return $this->belongsToMany(Tag::class, 'article_tag', 'article_id', 'tag_id');
+    }
+
+    public function getContentWithLinks() : string {
+        $content = $this->content;
+        foreach ($this->containedTags as $tag) {
+            $content = preg_replace(
+                '/\b('.$tag->name.')\b/ui',
+                '<a href="' . route("new.page", $tag->article_id) . '">$1</a>',
+                $content);
+        }
+        return $content;
     }
 }

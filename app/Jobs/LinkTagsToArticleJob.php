@@ -31,7 +31,7 @@ class LinkTagsToArticleJob implements ShouldQueue
         $this->article->containedTags()->detach();
 
         if (
-            !preg_match_all('/\b\w+\b/u', $this->article->content, $articleWords)
+            !preg_match_all('/\b\w+\b/ui', $this->article->content, $articleWords)
         ) {
             return;
         }

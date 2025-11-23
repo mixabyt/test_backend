@@ -19,8 +19,10 @@ class NewsController extends Controller
 
     public function indexpage($id) {
         $article = Article::where('is_active', true)->findOrFail($id);
-        $prev = Article::where('is_active', '=', 'true')->where('id', '<', $article->id,)->orderBy('id', 'desc')->first();
-        $next = Article::where('is_active', '=', 'true')->where('id', '>', $article->id,)->orderBy('id', 'asc')->first();
+        $prev = Article::where('is_active', '=', true)->where('id', '<', $article->id,)->orderBy('id', 'desc')->first();
+        $next = Article::where('is_active', '=', true)->where('id', '>', $article->id,)->orderBy('id', 'asc')->first();
+
+        $article->content = $article->getContentWithLinks();
 
         return view('newpage', compact('article', 'prev', 'next'));
     }

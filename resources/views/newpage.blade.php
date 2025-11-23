@@ -21,34 +21,32 @@
                     <img src="{{ asset('storage/' . $article->image) }}"
                          alt="{{ $article->title }}"
                          class="img-fluid rounded mb-4">
-{{--                @else--}}
-{{--                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded mb-4"--}}
-{{--                         style="height: 300px;">--}}
-{{--                        <span>Фото відсутнє</span>--}}
-{{--                    </div>--}}
                 @endif
 
 
                 <div class="article-content fs-5 text-justify-md">
-                    {{$article->content}}
+                    {!! $article->content !!}
                 </div>
 
             </div>
         </div>
         <div class="d-flex justify-content-between mt-4">
 
-            @if($prev)
-                <a href="{{route('new.page', $prev->id)}}" class="btn btn-outline-primary">
-                    ← Попередня новина
-                </a>
-            @endif
             @if($next)
-            <a href="{{route('new.page', $next->id)}}" class="btn btn-outline-primary">
-                 Наступна новина →
-            </a>
+                <a href="{{route('new.page', $next->id)}}" class="btn btn-outline-primary">
+                    ← Наступна новина
+                </a>
             @else
                 <div></div>
             @endif
+
+            @if($prev)
+                <a href="{{route('new.page', $prev->id)}}" class="btn btn-outline-primary">
+                     Попередня новина →
+                </a>
+
+            @endif
+
 
 
         </div>
