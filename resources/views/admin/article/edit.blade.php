@@ -1,84 +1,111 @@
 <x-layouts.adminpanel :title="'Редагувати статтю'">
-<form method="POST" action="{{route('article.update', $article->id)}}" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-    <div class="container py-5">
-        <div class="mb-3">
-            <label for="title" class="form-label">Назва статті</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Введіть назву" value="{{$article->title ?? "suda"}}" required>
-        </div>
-
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <div class="mb-3">
-            <label for="tagsInput" class="form-label">Теги</label>
-            <div id="tagsContainer" class="mb-2 d-flex flex-wrap gap-2">
-
-            </div>
-            <input type="text" class="form-control" id="tagsInput" placeholder="Введіть теги через пробіл">
-            <input type="hidden" name="tags[]" id="tagsHidden">
-        </div>
-
-
-
-
-        <div class="mb-3">
-            <label for="image" class="form-label">Завантажити зображення</label>
-            <input type="file" class="form-control" name="image" id="image">
-
-            <div id="imageWrapper" class="mt-3 text-left"
-                 @if(!$article->image) style="display:none;" @endif>
-
-
-                <img id="preview"
-                     src="@if($article->image) {{ asset('storage/' . $article->image) }} @endif"
-                     alt="article image"
-                     style="max-width: 250px; border-radius: 8px; display:block; margin:0;">
-
-
-                <button type="button" id="deleteImage" class="btn btn-danger btn-sm mt-2">
-                    Видалити зображення
-                </button>
+    <form method="POST" action="{{route('article.update', $article->id)}}" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="container py-5">
+            <div class="mb-3">
+                <label for="title" class="form-label">Назва статті</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Введіть назву"
+                       value="{{$article->title ?? "suda"}}" required>
             </div>
 
-            <input type="hidden" name="delete_image" id="deleteImageFlag" value="0">
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="mb-3">
+                <label for="tagsInput" class="form-label">Теги</label>
+                <div id="tagsContainer" class="mb-2 d-flex flex-wrap gap-2">
+
+                </div>
+                <input type="text" class="form-control" id="tagsInput" placeholder="Введіть теги через пробіл">
+                <input type="hidden" name="tags[]" id="tagsHidden">
+            </div>
+
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Завантажити зображення</label>
+                <input type="file" class="form-control" name="image" id="image">
+
+                <div id="imageWrapper" class="mt-3 text-left"
+                     @if(!$article->image) style="display:none;" @endif>
+
+
+                    <img id="preview"
+                         src="@if($article->image) {{ asset('storage/' . $article->image) }} @endif"
+                         alt="article image"
+                         style="max-width: 250px; border-radius: 8px; display:block; margin:0;">
+
+
+                    <button type="button" id="deleteImage" class="btn btn-danger btn-sm mt-2">
+                        Видалити зображення
+                    </button>
+                </div>
+
+                <input type="hidden" name="delete_image" id="deleteImageFlag" value="0">
+            </div>
+
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Текст статті</label>
+                <textarea class="form-control" id="content" name="content" rows="10" placeholder="Введіть текст статті"
+                          required>{{$article->content ?? "content"}}</textarea>
+            </div>
+
+
+            <div class="form-check m-3">
+                <input type="hidden" name="is_active" value="0">
+                <input class="form-check-input" type="checkbox" name="is_active" value="1" id="flexCheckDefault"
+                       @if($article->is_active) checked @endif>
+                <label class="form-check-label" for="flexCheckDefault">
+                    Зробити активною
+                </label>
+            </div>
+
+            <div class="d-flex justify-content-between">
+            <div>
+                <button type="submit" class="btn btn-success">Зберегти</button>
+                <a href="{{url()->previous()}}" class="btn btn-secondary">Скасувати</a>
+            </div>
+                <form method="POST" action="{{route('article.destroy', $article->id)}}">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="confirmation(event)" type="submit" class="btn btn-danger">Видалити</button>
+                </form>
+            </div>
+
+
         </div>
 
 
+    </form>
+    <script type="text/javascript">
+        function confirmation(event) {
+            event.preventDefault();
 
-
-        <div class="mb-3">
-            <label for="content" class="form-label">Текст статті</label>
-            <textarea class="form-control" id="content" name="content" rows="10" placeholder="Введіть текст статті" required>{{$article->content ?? "content"}}</textarea>
-        </div>
-
-
-        <div class="form-check m-3">
-            <input type="hidden" name="is_active" value="0">
-            <input class="form-check-input" type="checkbox" name="is_active" value="1" id="flexCheckDefault"
-                   @if($article->is_active) checked @endif>
-            <label class="form-check-label" for="flexCheckDefault">
-                Зробити активною
-            </label>
-        </div>
-
-        <button type="submit" class="btn btn-success">Редагувати</button>
-        <a href="{{route('dashboard')}}" class="btn btn-secondary">Скасувати</a>
-
-
-    </div>
-
-
-</form>
+            Swal.fire({
+                title: 'Видалити?',
+                text: "Ви точно хочете видалити цю статтю? Ця дія незворотня",
+                // icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Так',
+                cancelButtonText: 'Ні'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    event.target.closest('form').submit();
+                }
+            });
+        }
+    </script>
     <script>
         const container = document.getElementById('tagsContainer')
         const input = document.getElementById('tagsInput')
@@ -142,7 +169,7 @@
         const deleteBtn = document.getElementById('deleteImage');
         const deleteFlag = document.getElementById('deleteImageFlag');
 
-        imageInput.addEventListener('change', function(event) {
+        imageInput.addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
                 preview.src = URL.createObjectURL(file);

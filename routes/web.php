@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\ArticleController;
 
-Route::middleware('auth')->prefix('myarticles')->group(function () {
+Route::middleware('auth')->prefix('articles')->group(function () {
         Route::get('/', ShowArticleController::class)->name('dashboard');
         Route::view('/create', 'admin.article.create')->name('article.create');
         Route::post("/create", [ArticleController::class, 'store'])->name('article.store');

@@ -119,7 +119,7 @@ class ArticleController extends Controller
 
         $article->save();
 
-        return redirect()->route('dashboard');
+        return redirect()->back();
     }
 
     public function destroy($id)

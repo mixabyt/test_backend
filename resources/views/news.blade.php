@@ -12,7 +12,13 @@
                     <div class="card-body">
                         <h5 class="card-title text-nowrap text-truncate">{{$article->title}}</h5>
                         <p class="text-muted mb-2">{{$article->created_at}}</p>
-                        <a type="button" class="btn btn-primary" href="{{route('new.page',$article->id)}}">Читати</a>
+                        <div class="d-flex justify-content-between">
+                            <a class="btn btn-primary" href="{{ route('new.page', $article->id) }}">Читати</a>
+
+                            @if(auth()->check() && (auth()->id() === $article->user_id || auth()->user()->role === 'admin'))
+                                <a class="btn btn-success" href="{{ route('article.edit', $article->id) }}">Редагувати</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

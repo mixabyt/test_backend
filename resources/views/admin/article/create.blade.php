@@ -57,31 +57,49 @@
     </form>
 
     <script>
+
         let tags = @json(old('tags', []));
+
         const container = document.getElementById('tagsContainer');
+        const input = document.getElementById('tagsInput');
+        const form = document.querySelector('form');
 
         function createTagElement(tag) {
-            const btn = document.createElement('button')
-            btn.type = 'button'
-            btn.className = 'btn btn-sm btn-secondary'
-            btn.textContent = tag + ' ×'
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-sm btn-secondary me-1 mb-1';
+            btn.textContent = tag + ' ×';
+
             btn.addEventListener('click', () => {
-                tags = tags.filter(t => t !== tag)
+                tags = tags.filter(t => t !== tag);
                 btn.remove();
-                const hiddenInputs = document.querySelectorAll('input[name="tags[]"]')
-                hiddenInputs.forEach(input => {
-                    if (input.value === tag) {
-                        input.remove()
-                    }
-                })
-            })
-            return btn
+                updateHiddenInputs();
+            });
+
+            return btn;
+        }
+        function addTagFromInput() {
+            const tag = input.value.trim();
+
+            if (!tag) return false;
+            if (tags.includes(tag)) {
+                input.value = '';
+                return false;
+            }
+
+            tags.push(tag);
+
+            const tagEl = createTagElement(tag);
+            container.appendChild(tagEl);
+
+            updateHiddenInputs();
+
+            input.value = '';
+
+            return true;
         }
 
-        const hiddenInput = document.getElementById('tagsHidden');
-
-        function updateHiddenInput() {
-
+        function updateHiddenInputs() {
             document.querySelectorAll('input[name="tags[]"]').forEach(i => i.remove());
 
             tags.forEach(tag => {
@@ -93,27 +111,25 @@
             });
         }
 
-
         tags.forEach(tag => {
             const tagEl = createTagElement(tag);
             container.appendChild(tagEl);
         });
-        updateHiddenInput();
+        updateHiddenInputs();
 
-
-        const input = document.getElementById('tagsInput');
         input.addEventListener('keydown', (e) => {
-            if (e.key === ' ') {
+            if (e.key === ' ' || e.key === 'Enter') {
                 e.preventDefault();
-                const tag = input.value.trim();
-                if (tag && !tags.includes(tag)) {
-                    tags.push(tag);
-                    const tagEl = createTagElement(tag);
-                    container.appendChild(tagEl);
-                    updateHiddenInput();
-                }
-                input.value = '';
+                addTagFromInput();
             }
+        });
+
+        input.addEventListener('blur', () => {
+            addTagFromInput();
+        });
+
+        form.addEventListener('submit', () => {
+            addTagFromInput();
         });
     </script>
 
