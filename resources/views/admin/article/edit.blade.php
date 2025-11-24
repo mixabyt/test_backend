@@ -74,11 +74,6 @@
                 <button type="submit" class="btn btn-success">Зберегти</button>
                 <a href="{{url()->previous()}}" class="btn btn-secondary">Скасувати</a>
             </div>
-                <form method="POST" action="{{route('article.destroy', $article->id)}}">
-                    @csrf
-                    @method('DELETE')
-                    <button onclick="confirmation(event)" type="submit" class="btn btn-danger">Видалити</button>
-                </form>
             </div>
 
 
@@ -86,26 +81,7 @@
 
 
     </form>
-    <script type="text/javascript">
-        function confirmation(event) {
-            event.preventDefault();
 
-            Swal.fire({
-                title: 'Видалити?',
-                text: "Ви точно хочете видалити цю статтю? Ця дія незворотня",
-                // icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Так',
-                cancelButtonText: 'Ні'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    event.target.closest('form').submit();
-                }
-            });
-        }
-    </script>
     <script>
         const container = document.getElementById('tagsContainer')
         const input = document.getElementById('tagsInput')

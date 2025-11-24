@@ -130,6 +130,6 @@ class ArticleController extends Controller
             Storage::disk('public')->delete($article->image);
         }
         $article->delete();
-        return redirect()->route('dashboard');
+        return redirect()->back();
     }
 }
