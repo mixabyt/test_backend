@@ -28,7 +28,7 @@ class StoreArticleRequest extends FormRequest
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'tags' => ['nullable', 'array'],
             'tags.*' => ['string', 'alpha_num', 'lowercase', 'min:3', 'max:255'],
-            'content' => ['required', 'string'],
+            'content' => ['required', 'string', 'max:10000'],
             'is_active' => ['nullable', 'boolean'],
         ];
     }
