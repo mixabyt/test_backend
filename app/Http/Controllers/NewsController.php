@@ -9,7 +9,7 @@ class NewsController extends Controller
 {
 
     public function index() {
-        if (auth()->user()->role === 'admin') {
+        if (optional(auth()->user())->role === 'admin') {
             $articles = Article::query()->orderBy('created_at', 'desc')->paginate(9);
         } else {
             $articles = Article::where('is_active', true)->orderBy('created_at', 'desc')->paginate(9);
